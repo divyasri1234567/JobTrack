@@ -161,7 +161,8 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    #"http://localhost:5173",
+    "https://jobtrack-frontend-2nc4.onrender.com",
 ]
 
 ALLOWED_HOSTS = [
