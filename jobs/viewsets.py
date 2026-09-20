@@ -1,18 +1,41 @@
 from django.db.models import Count, Q
 
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.views import APIView
 
 from .helpers import JobApplicationHelper
 from .models import JobApplication
 from .serializers import (
+    RegisterSerializer,
     JobApplicationCreateSerializer,
     JobApplicationSerializer,
     JobApplicationUpdateSerializer,
 )
+
+
+class RegisterViewSet(ViewSet):
+    permission_classes = [AllowAny]
+
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="register",
+    )
+    def register(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            {
+                "message": "User registered successfully",
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class JobApplicationViewSet(ModelViewSet):

@@ -1,7 +1,12 @@
 from django.urls import include, path
+
 from rest_framework.routers import SimpleRouter
 
-from .viewsets import DashboardView, JobApplicationViewSet
+from .viewsets import (
+    DashboardView,
+    JobApplicationViewSet,
+    RegisterViewSet,
+)
 
 
 router = SimpleRouter()
@@ -10,6 +15,12 @@ router.register(
     r"applications",
     JobApplicationViewSet,
     basename="applications",
+)
+
+router.register(
+    r"auth",
+    RegisterViewSet,
+    basename="auth",
 )
 
 
